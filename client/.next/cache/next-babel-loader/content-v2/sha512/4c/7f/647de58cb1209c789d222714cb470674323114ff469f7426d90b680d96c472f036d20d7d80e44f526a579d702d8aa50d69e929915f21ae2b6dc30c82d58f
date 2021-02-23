@@ -1,0 +1,1 @@
+{"ast":null,"code":"import './styles/main.css';","map":{"version":3,"sources":["C:/Users/Timofey/Desktop/cupcake/cupcake-frontend-test-task/client/pages/_app.js"],"names":[],"mappings":"AAAA,OAAO,mBAAP","sourcesContent":["import './styles/main.css';"]},"metadata":{},"sourceType":"module"}

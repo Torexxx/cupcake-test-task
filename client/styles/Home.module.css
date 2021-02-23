@@ -1,0 +1,85 @@
+.min {
+    background: #337AB7;
+    padding: 5px;
+    border-radius: 16px;
+    /*text-align: center*/
+}
+.wrapper {
+    margin: 0 auto;
+    max-width: 500px
+}
+
+.table > div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.respTab td {
+    padding: 9px;
+}
+.respTab {
+    min-width: 100%;
+    border-radius: 5px;
+    font-weight: normal;
+    border: none;
+    border-collapse: collapse;
+    /*width: 100%;*/
+    max-width: 100%;
+}
+.respTab th, .resp-tab td {
+    padding: 10px 4px;
+    font-size: 13px;
+    border: none;
+    font-family: Verdana, sans-serif;
+    border: 1px solid #337AB7;
+    vertical-align: top;
+}
+.respTab th {
+    color: #FFF;
+    background: #337AB7;
+    font-weight: bold;
+    border: 1px solid #1a4a73;
+    text-transform: uppercase;
+    text-align: left;
+}
+.respTab tr:nth-child(even) {
+    background: #edf7ff;
+}
+.respTab td span {
+    background: #337AB7;
+    color: #FFF;
+    display: none;
+    font-size: 11px;
+    font-weight: bold;
+    font-family: Verdana, sans-serif;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+@media(max-width: 768px) {
+    .respTab thead {
+        display: none;
+    }
+    .respTab tr {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        margin-bottom: 30px;
+    }
+    .respTab td {
+        margin: 0 -1px -1px 0;
+        padding-top: 35px;
+        position: relative;
+        width: 50%;
+    }
+    .respTab td span {
+        display: block;
+    }
+}
+@media(max-width: 480px) {
+    .respTabtd {
+        width: 100%;
+    }
+}

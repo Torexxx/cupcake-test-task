@@ -1,0 +1,1 @@
+{"ast":null,"code":"/* eslint-disable */\nimport './styles/main.css';","map":{"version":3,"sources":["C:/Users/Timofey/Desktop/cupcake/cupcake-frontend-test-task/client/pages/_app.js"],"names":[],"mappings":"AAAA;AAEA,OAAO,mBAAP","sourcesContent":["/* eslint-disable */\r\n\r\nimport './styles/main.css'"]},"metadata":{},"sourceType":"module"}
