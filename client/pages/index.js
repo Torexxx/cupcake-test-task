@@ -3,101 +3,97 @@ import axios from 'axios';
 import styles from '../styles/Home.module.css';
 
 const Index = () => {
-  let rubUsd = {
+  const [rubUsd, setRubUsd] = useState({
     first: 0,
     second: 0,
     third: 0,
-  };
-  let rubEur = {
+  });
+  const [rubEur, setRubEur] = useState({
     first: 0,
     second: 0,
     third: 0,
-  };
-  let eurUsd = {
+  });
+  const [eurUsd, setEurUsd] = useState({
     first: 0,
     second: 0,
     third: 0,
-  };
-  function calc(market, curr1, curr2) {
-    if (market.RUB || market.USD || market.EUR) {
-      rubUsd.first = (first.RUB / first.USD).toFixed(2);
-      rubUsd.second = (second.RUB / second.USD).toFixed(2);
-      rubUsd.third = (third.RUB / third.USD).toFixed(2);
-
-      rubEur.first = (first.RUB / first.EUR).toFixed(2);
-      rubEur.second = (second.RUB / second.EUR).toFixed(2);
-      rubEur.third = (third.RUB / third.EUR).toFixed(2);
-
-      eurUsd.first = (first.EUR / first.USD).toFixed(2);
-      eurUsd.second = (second.EUR / second.USD).toFixed(2);
-      eurUsd.third = (third.EUR / third.USD).toFixed(2);
-
-      let valuesRubUsd = Object.keys(rubUsd).map(function (key) {return rubUsd[key];});
-      let valuesRubEur = Object.keys(rubEur).map(function (key) {return rubEur[key];});
-      let valuesEurUsd = Object.keys(eurUsd).map(function (key) {return eurUsd[key];});
-
-      let minValueRubUsd = Math.min.apply(null, valuesRubUsd);
-      let minValueRubEur = Math.min.apply(null, valuesRubEur);
-      let minValueEurUsd = Math.min.apply(null, valuesEurUsd);
-
-      let currentValue = (market[curr1] / market[curr2]).toFixed(2);
-
-      if (
-        currentValue == minValueRubUsd ||
-        currentValue == minValueRubEur ||
-        currentValue == minValueEurUsd
-      ) {
-        return <div className={styles.min}>{currentValue}</div>;
-      }
-      return currentValue;
-    }
-  }
-  let [first, setFirst] = useState({
-    RUB: 0,
-    USD: 0,
-    EUR: 0,
   });
-  let [second, setSecond] = useState({
-    RUB: 0,
-    USD: 0,
-    EUR: 0,
-  });
-  let [third, setThird] = useState({
-    RUB: 0,
-    USD: 0,
-    EUR: 0,
-  });
-  useEffect(() => {
-    let timeout = setTimeout(() => {
-      axios('http://localhost:5000/api/v1/first').then((res) =>
-        setFirst(res.data.rates),
-      );
-    }, 3000);
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, [first]);
-  useEffect(() => {
-    let timeout = setTimeout(() => {
-      axios('http://localhost:5000/api/v1/second').then((res) =>
-        setSecond(res.data.rates),
-      );
-    }, 3000);
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, [second]);
-  useEffect(() => {
-    let timeout = setTimeout(() => {
-      axios('http://localhost:5000/api/v1/third').then((res) =>
-        setThird(res.data.rates),
-      );
-    }, 3000);
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, [third]);
 
+  useEffect(() => {
+    axios('http://localhost:5000/api/v1/first/poll').then((res) => {
+      setRubUsd((prev) => {
+        return {
+          ...prev,
+          first: (res.data.rates.RUB / res.data.rates.USD).toFixed(2),
+          // second: (second.RUB / second.USD).toFixed(2),
+          // third: (third.RUB / third.USD).toFixed(2),
+        };
+      });
+
+      setRubEur((prev) => {
+        return {
+          ...prev,
+          first: (res.data.rates.RUB / res.data.rates.EUR).toFixed(2),
+          // second: (second.RUB / second.USD).toFixed(2),
+          // third: (third.RUB / third.USD).toFixed(2),
+        };
+      });
+      setEurUsd((prev) => {
+        return {
+          ...prev,
+          first: (res.data.rates.EUR / res.data.rates.USD).toFixed(2),
+          // second: (second.RUB / second.USD).toFixed(2),
+          // third: (third.RUB / third.USD).toFixed(2),
+        };
+      });
+    });
+  }, [rubUsd.first, rubEur.first, eurUsd.first]);
+  useEffect(() => {
+    axios('http://localhost:5000/api/v1/second/poll').then((res) => {
+      setRubUsd((prev) => {
+        return {
+          ...prev,
+          second: (res.data.rates.RUB / res.data.rates.USD).toFixed(2),
+        };
+      });
+
+      setRubEur((prev) => {
+        return {
+          ...prev,
+          second: (res.data.rates.RUB / res.data.rates.EUR).toFixed(2),
+        };
+      });
+      setEurUsd((prev) => {
+        return {
+          ...prev,
+          second: (res.data.rates.EUR / res.data.rates.USD).toFixed(2),
+        };
+      });
+    });
+  }, [rubUsd.second, rubEur.second, eurUsd.second]);
+  useEffect(() => {
+    axios('http://localhost:5000/api/v1/third/poll').then((res) => {
+      setRubUsd((prev) => {
+        return {
+          ...prev,
+          third: (res.data.rates.RUB / res.data.rates.USD).toFixed(2),
+        };
+      });
+
+      setRubEur((prev) => {
+        return {
+          ...prev,
+          third: (res.data.rates.RUB / res.data.rates.EUR).toFixed(2),
+        };
+      });
+      setEurUsd((prev) => {
+        return {
+          ...prev,
+          third: (res.data.rates.EUR / res.data.rates.USD).toFixed(2),
+        };
+      });
+    });
+  }, [rubUsd.third, rubEur.third, eurUsd.third]);
   return (
     <div className={styles.wrapper}>
       <table className={styles.respTab}>
@@ -111,40 +107,22 @@ const Index = () => {
         </thead>
         <tbody>
           <tr>
-            <td>RUB/CUPCAKE </td>
-            <td> {first.RUB.toFixed(2)}</td>
-            <td> {second.RUB.toFixed(2)}</td>
-            <td> {third.RUB.toFixed(2)}</td>
-          </tr>
-          <tr>
-            <td>USD/CUPCAKE</td>
-            <td> {first.USD.toFixed(2)}</td>
-            <td> {second.USD.toFixed(2)}</td>
-            <td> {third.USD.toFixed(2)}</td>
-          </tr>
-          <tr>
-            <td>EUR/CUPCAKE</td>
-            <td> {first.EUR.toFixed(2)}</td>
-            <td>{second.EUR.toFixed(2)}</td>
-            <td> {third.EUR.toFixed(2)}</td>
-          </tr>
-          <tr>
             <td>RUB/USD</td>
-            <td>{calc(first, 'RUB', 'USD') || 'Загрузка...'}</td>
-            <td>{calc(second, 'RUB', 'USD') || 'Загрузка...'}</td>
-            <td>{calc(third, 'RUB', 'USD') || 'Загрузка...'}</td>
+            <td>{rubUsd.first}</td>
+            <td>{rubUsd.second}</td>
+            <td>{rubUsd.third}</td>
           </tr>
           <tr>
             <td>RUB/EUR</td>
-            <td>{calc(first, 'RUB', 'EUR') || 'Загрузка...'}</td>
-            <td>{calc(second, 'RUB', 'EUR') || 'Загрузка...'}</td>
-            <td>{calc(third, 'RUB', 'EUR') || 'Загрузка...'}</td>
+            <td>{rubEur.first}</td>
+            <td>{rubEur.second}</td>
+            <td>{rubEur.third}</td>
           </tr>
           <tr>
             <td>EUR/USD</td>
-            <td>{calc(first, 'EUR', 'USD') || 'Загрузка...'}</td>
-            <td>{calc(second, 'EUR', 'USD') || 'Загрузка...'}</td>
-            <td>{calc(third, 'EUR', 'USD') || 'Загрузка...'}</td>
+            <td>{eurUsd.first}</td>
+            <td>{eurUsd.second}</td>
+            <td>{eurUsd.third}</td>
           </tr>
         </tbody>
       </table>
